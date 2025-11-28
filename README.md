@@ -1,36 +1,34 @@
-# Shopping Cart API
+# 🛒 Shopping Cart API
 
-A simple backend REST API for managing a shopping cart built with Node.js, Express, and TypeScript.
+A simple, robust backend REST API for managing a shopping cart built with **Node.js**, **Express**, and **TypeScript**.
 
-## Features
+![Node.js](https://img.shields.io/badge/Node.js-18+-green)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
+![Tests](https://img.shields.io/badge/Tests-33%20passed-success)
+![Coverage](https://img.shields.io/badge/Coverage-96%25-brightgreen)
 
-- ✅ Add, update, and remove shopping cart items
-- ✅ Retrieve current cart contents
-- ✅ Calculate total price automatically
-- ✅ Checkout functionality with order summary
-- ✅ In-memory database storage
-- ✅ Comprehensive error handling
-- ✅ Request/Response logging
-- ✅ Swagger API documentation
-- ✅ Unit tests with 96%+ coverage
+---
 
-## Tech Stack
+## ✨ Features
 
-| Component | Technology |
-|-----------|------------|
-| Runtime | Node.js |
-| Framework | Express.js |
-| Language | TypeScript |
-| Testing | Jest |
-| Logging | Winston |
-| Documentation | Swagger (OpenAPI) |
+- ✅ **CRUD Operations** - Add, update, remove cart items
+- ✅ **Auto Calculation** - Total price calculated automatically
+- ✅ **Checkout** - Generate order summary with unique Order ID
+- ✅ **In-Memory Storage** - Fast, simple data storage
+- ✅ **Error Handling** - Comprehensive validation and error responses
+- ✅ **Logging** - Winston logger for all activities
+- ✅ **API Documentation** - Interactive Swagger UI
+- ✅ **Unit Tests** - 33 tests with 96%+ coverage
 
-## Quick Start
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ installed
-- npm or yarn
+- Node.js 18+
+- npm
 
 ### Installation
 
@@ -43,7 +41,7 @@ cd shopping-cart
 npm install
 ```
 
-### Running the Server
+### Run the Server
 
 ```bash
 # Development mode (with hot reload)
@@ -54,36 +52,52 @@ npm run build
 npm start
 ```
 
-### Running Tests
+### Run Tests
 
 ```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage report
-npm run test:coverage
+npm test                 # Run all tests
+npm run test:coverage    # Run with coverage report
 ```
 
-## API Endpoints
+---
+
+## 📖 API Documentation
+
+### Swagger UI
+
+Interactive documentation available at:
+
+```
+http://localhost:3001/api-docs
+```
+
+### Base URL
+
+```
+http://localhost:3001/api
+```
+
+---
+
+## 🔗 API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/cart` | Get cart contents |
-| POST | `/api/cart` | Add item to cart |
-| PUT | `/api/cart/:productId` | Update item quantity/price |
-| DELETE | `/api/cart/:productId` | Remove single item |
-| DELETE | `/api/cart` | Clear entire cart |
-| POST | `/api/cart/checkout` | Process checkout |
+| `GET` | `/cart` | Get cart contents |
+| `POST` | `/cart` | Add item to cart |
+| `PUT` | `/cart/:productId` | Update item quantity/price |
+| `DELETE` | `/cart/:productId` | Remove single item |
+| `DELETE` | `/cart` | Clear entire cart |
+| `POST` | `/cart/checkout` | Process checkout |
 
-## API Usage Examples
+---
+
+## 📝 Usage Examples
 
 ### Add Item to Cart
 
 ```bash
-curl -X POST http://localhost:3000/api/cart \
+curl -X POST http://localhost:3001/api/cart \
   -H "Content-Type: application/json" \
   -d '{
     "productId": 1,
@@ -93,16 +107,36 @@ curl -X POST http://localhost:3000/api/cart \
   }'
 ```
 
+**Response (201 Created):**
+```json
+{
+  "success": true,
+  "message": "Item added to cart",
+  "data": {
+    "items": [
+      {
+        "productId": 1,
+        "name": "Milk",
+        "price": 2.5,
+        "quantity": 2
+      }
+    ],
+    "total": 5,
+    "itemCount": 2
+  }
+}
+```
+
 ### Get Cart Contents
 
 ```bash
-curl http://localhost:3000/api/cart
+curl http://localhost:3001/api/cart
 ```
 
-### Update Item
+### Update Item Quantity
 
 ```bash
-curl -X PUT http://localhost:3000/api/cart/1 \
+curl -X PUT http://localhost:3001/api/cart/1 \
   -H "Content-Type: application/json" \
   -d '{"quantity": 5}'
 ```
@@ -110,37 +144,38 @@ curl -X PUT http://localhost:3000/api/cart/1 \
 ### Remove Item
 
 ```bash
-curl -X DELETE http://localhost:3000/api/cart/1
+curl -X DELETE http://localhost:3001/api/cart/1
 ```
 
 ### Checkout
 
 ```bash
-curl -X POST http://localhost:3000/api/cart/checkout
+curl -X POST http://localhost:3001/api/cart/checkout
 ```
 
-## Documentation
-
-### Swagger UI
-
-Interactive API documentation is available at:
-
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Checkout successful",
+  "data": {
+    "orderId": "ORD-1764326145014-itaoo6dl",
+    "items": [...],
+    "total": 25.50,
+    "itemCount": 8,
+    "checkoutTime": "2025-11-28T10:35:45.014Z"
+  }
+}
 ```
-http://localhost:3000/api-docs
-```
 
-### Health Check
+---
 
-```
-http://localhost:3000/health
-```
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 shopping-cart/
 ├── src/
-│   ├── config/          # Configuration (logger, swagger)
+│   ├── config/          # Logger & Swagger configuration
 │   ├── controllers/     # Request handlers
 │   ├── errors/          # Custom error classes
 │   ├── middleware/      # Express middleware
@@ -157,73 +192,134 @@ shopping-cart/
 └── jest.config.js
 ```
 
-## Available Scripts
+---
+
+## 🛠 Tech Stack
+
+| Component | Technology |
+|-----------|------------|
+| Runtime | Node.js |
+| Framework | Express.js |
+| Language | TypeScript |
+| Testing | Jest |
+| Logging | Winston |
+| Documentation | Swagger (OpenAPI) |
+| Database | In-Memory |
+
+---
+
+## 📋 Available Scripts
 
 | Script | Description |
 |--------|-------------|
-| `npm run dev` | Start development server with hot reload |
+| `npm run dev` | Start development server |
 | `npm run build` | Build TypeScript to JavaScript |
 | `npm start` | Start production server |
 | `npm test` | Run unit tests |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run test:coverage` | Run tests with coverage report |
+| `npm run test:coverage` | Run tests with coverage |
 
-## Response Format
+---
 
-### Success Response
+## ⚠️ Error Handling
 
+### Response Format
+
+**Success:**
 ```json
 {
   "success": true,
-  "message": "Item added to cart",
-  "data": {
-    "items": [...],
-    "total": 5.00,
-    "itemCount": 2
-  }
+  "message": "Operation description",
+  "data": { ... }
 }
 ```
 
-### Error Response
-
+**Error:**
 ```json
 {
   "success": false,
   "error": {
-    "message": "productId is required",
+    "message": "Error description",
     "statusCode": 400
   }
 }
 ```
 
-## Error Codes
+### HTTP Status Codes
 
 | Code | Description |
 |------|-------------|
-| 200 | Success |
-| 201 | Created |
-| 400 | Bad Request / Validation Error |
-| 404 | Not Found |
-| 500 | Internal Server Error |
+| `200` | Success |
+| `201` | Created |
+| `400` | Bad Request / Validation Error |
+| `404` | Not Found |
+| `500` | Internal Server Error |
 
 ---
 
-## Related Documents
+## ✅ Test Results
+
+```
+Test Suites: 1 passed, 1 total
+Tests:       33 passed, 33 total
+Coverage:    96.84%
+```
+
+### Test Categories
+- Add item (5 tests)
+- Update item (4 tests)
+- Remove item (4 tests)
+- Clear cart (4 tests)
+- Get cart (4 tests)
+- Checkout (5 tests)
+- Validation (7 tests)
+
+---
+
+## 📚 Documentation
 
 | Document | Description |
 |----------|-------------|
-| [requirements.md](./requirements.md) | Basic project requirements |
+| [requirements.md](./requirements.md) | Project requirements |
 | [prd.md](./prd.md) | Product Requirements Document |
-| [architecture.md](./architecture.md) | System architecture and data flow |
-| [data-model.md](./data-model.md) | Data model specifications |
-| [api-spec.md](./api-spec.md) | Complete API specification |
-| [error-handling.md](./error-handling.md) | Error handling strategy |
-| [logging.md](./logging.md) | Logging implementation |
+| [architecture.md](./architecture.md) | System architecture |
+| [data-model.md](./data-model.md) | Data models |
+| [api-spec.md](./api-spec.md) | API specification |
+| [error-handling.md](./error-handling.md) | Error handling |
+| [logging.md](./logging.md) | Logging strategy |
 | [testing.md](./testing.md) | Testing strategy |
-| [swagger.md](./swagger.md) | Swagger setup guide |
-| [tasks.md](./tasks.md) | Implementation checklist |
-| [rules.md](./rules.md) | Development best practices |
+| [swagger.md](./swagger.md) | Swagger setup |
+| [tasks.md](./tasks.md) | Implementation tasks |
+| [rules.md](./rules.md) | Development rules |
 
-## License
+---
+
+## 🔧 Health Check
+
+```bash
+curl http://localhost:3001/health
+```
+
+```json
+{
+  "status": "ok",
+  "timestamp": "2025-11-28T10:35:45.014Z"
+}
+```
+
+---
+
+## 📄 License
 
 ISC
+
+---
+
+## 👩‍💻 Author
+
+Made with ❤️ by Milena
+
+---
+
+## 🌟 Repository
+
+https://github.com/MilenaHtec/shopping-cart
