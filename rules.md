@@ -24,15 +24,15 @@ src/
 
 ### 1.2 File Naming Conventions
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Controllers | `*.controller.ts` | `cart.controller.ts` |
-| Services | `*.service.ts` | `cart.service.ts` |
-| Routes | `*.routes.ts` | `cart.routes.ts` |
-| Models | `*.model.ts` | `cart.model.ts` |
-| Middleware | `*.middleware.ts` or descriptive | `errorHandler.ts` |
-| Tests | `*.test.ts` | `cart.service.test.ts` |
-| Config | descriptive name | `logger.ts`, `swagger.ts` |
+| Type        | Pattern                          | Example                   |
+| ----------- | -------------------------------- | ------------------------- |
+| Controllers | `*.controller.ts`                | `cart.controller.ts`      |
+| Services    | `*.service.ts`                   | `cart.service.ts`         |
+| Routes      | `*.routes.ts`                    | `cart.routes.ts`          |
+| Models      | `*.model.ts`                     | `cart.model.ts`           |
+| Middleware  | `*.middleware.ts` or descriptive | `errorHandler.ts`         |
+| Tests       | `*.test.ts`                      | `cart.service.test.ts`    |
+| Config      | descriptive name                 | `logger.ts`, `swagger.ts` |
 
 ### 1.3 One Responsibility Per File
 
@@ -70,7 +70,12 @@ interface CartItem {
 }
 
 // ❌ Bad - inline types everywhere
-function addItem(item: { productId: number; name: string; price: number; quantity: number }) {
+function addItem(item: {
+  productId: number;
+  name: string;
+  price: number;
+  quantity: number;
+}) {
   // ...
 }
 ```
@@ -106,14 +111,14 @@ res.status(400).json({ error: "Bad request" });
 
 ### 3.1 Naming Conventions
 
-| Type | Convention | Example |
-|------|------------|---------|
-| Variables | camelCase | `cartItems`, `totalPrice` |
-| Functions | camelCase | `addItem()`, `calculateTotal()` |
-| Classes | PascalCase | `CartService`, `AppError` |
-| Interfaces | PascalCase | `CartItem`, `ApiResponse` |
-| Constants | UPPER_SNAKE_CASE | `MAX_QUANTITY`, `DEFAULT_PORT` |
-| Files | kebab-case or dot notation | `cart.service.ts` |
+| Type       | Convention                 | Example                         |
+| ---------- | -------------------------- | ------------------------------- |
+| Variables  | camelCase                  | `cartItems`, `totalPrice`       |
+| Functions  | camelCase                  | `addItem()`, `calculateTotal()` |
+| Classes    | PascalCase                 | `CartService`, `AppError`       |
+| Interfaces | PascalCase                 | `CartItem`, `ApiResponse`       |
+| Constants  | UPPER_SNAKE_CASE           | `MAX_QUANTITY`, `DEFAULT_PORT`  |
+| Files      | kebab-case or dot notation | `cart.service.ts`               |
 
 ### 3.2 Function Length
 
@@ -145,19 +150,19 @@ function getItem(productId: number): CartItem | undefined {
   if (!productId) {
     return undefined;
   }
-  
-  const item = this.items.find(i => i.productId === productId);
+
+  const item = this.items.find((i) => i.productId === productId);
   if (!item) {
     return undefined;
   }
-  
+
   return item;
 }
 
 // ❌ Bad - deep nesting
 function getItem(productId: number): CartItem | undefined {
   if (productId) {
-    const item = this.items.find(i => i.productId === productId);
+    const item = this.items.find((i) => i.productId === productId);
     if (item) {
       return item;
     } else {
@@ -193,11 +198,13 @@ if (quantity < 1) {
 ### 4.1 Keep Controllers Thin
 
 Controllers should:
+
 - Extract data from request (params, body, query)
 - Call service methods
 - Return response
 
 Controllers should NOT:
+
 - Contain business logic
 - Access database directly
 - Perform complex calculations
@@ -207,7 +214,7 @@ Controllers should NOT:
 const addItem = asyncHandler(async (req: Request, res: Response) => {
   const { productId, name, price, quantity } = req.body;
   const cart = cartService.addItem({ productId, name, price, quantity });
-  
+
   res.status(201).json({
     success: true,
     message: "Item added to cart",
@@ -218,16 +225,19 @@ const addItem = asyncHandler(async (req: Request, res: Response) => {
 // ❌ Bad - fat controller with business logic
 const addItem = asyncHandler(async (req: Request, res: Response) => {
   const { productId, name, price, quantity } = req.body;
-  
+
   // Business logic should be in service!
-  const existingItem = cart.items.find(i => i.productId === productId);
+  const existingItem = cart.items.find((i) => i.productId === productId);
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
     cart.items.push({ productId, name, price, quantity });
   }
-  
-  const total = cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const total = cart.items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   // ...
 });
 ```
@@ -259,6 +269,7 @@ const getCart = async (req: Request, res: Response, next: NextFunction) => {
 ### 5.1 Keep Business Logic in Services
 
 All business logic belongs in services:
+
 - Validation
 - Calculations
 - Data manipulation
@@ -377,18 +388,21 @@ res.status(500).json({
 
 ### 7.1 Log at Appropriate Levels
 
-| Level | When to Use |
-|-------|-------------|
-| `error` | Exceptions, failures, 500 errors |
-| `warn` | Recoverable issues, 4xx errors |
-| `info` | Normal operations, requests, business events |
-| `debug` | Detailed debugging (development only) |
+| Level   | When to Use                                  |
+| ------- | -------------------------------------------- |
+| `error` | Exceptions, failures, 500 errors             |
+| `warn`  | Recoverable issues, 4xx errors               |
+| `info`  | Normal operations, requests, business events |
+| `debug` | Detailed debugging (development only)        |
 
 ### 7.2 Include Context in Logs
 
 ```typescript
 // ✅ Good - includes context
-logger.info("Item added to cart", { productId: item.productId, quantity: item.quantity });
+logger.info("Item added to cart", {
+  productId: item.productId,
+  quantity: item.quantity,
+});
 
 // ❌ Bad - no context
 logger.info("Item added");
@@ -441,10 +455,10 @@ test("error case", () => {});
 test("should add item to cart", () => {
   // Arrange
   const item = { productId: 1, name: "Milk", price: 2.5, quantity: 2 };
-  
+
   // Act
   const result = cartService.addItem(item);
-  
+
   // Assert
   expect(result.items).toHaveLength(1);
   expect(result.items[0]).toEqual(item);
@@ -482,13 +496,13 @@ describe("CartService", () => {
 
 ### 9.2 Use Appropriate Status Codes
 
-| Code | When |
-|------|------|
-| 200 | Successful GET, PUT, DELETE |
-| 201 | Successful POST (created) |
-| 400 | Validation error, bad request |
-| 404 | Resource not found |
-| 500 | Server error |
+| Code | When                          |
+| ---- | ----------------------------- |
+| 200  | Successful GET, PUT, DELETE   |
+| 201  | Successful POST (created)     |
+| 400  | Validation error, bad request |
+| 404  | Resource not found            |
+| 500  | Server error                  |
 
 ### 9.3 Always Return JSON
 
@@ -579,7 +593,7 @@ const DB_PASSWORD = "secret123"; // Never do this!
 const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
 // ❌ Bad - multiple loops
-const prices = items.map(item => item.price * item.quantity);
+const prices = items.map((item) => item.price * item.quantity);
 const total = prices.reduce((sum, price) => sum + price, 0);
 ```
 
@@ -620,16 +634,15 @@ if (items.length === 0) {
 
 ## Related Documents
 
-| Document | Description |
-|----------|-------------|
-| [requirements.md](./requirements.md) | Basic project requirements |
-| [prd.md](./prd.md) | Product Requirements Document |
-| [architecture.md](./architecture.md) | System architecture and data flow |
-| [data-model.md](./data-model.md) | Data model specifications |
-| [api-spec.md](./api-spec.md) | Complete API specification |
-| [error-handling.md](./error-handling.md) | Error handling strategy |
-| [logging.md](./logging.md) | Logging implementation |
-| [testing.md](./testing.md) | Testing strategy |
-| [swagger.md](./swagger.md) | Swagger setup guide |
-| [tasks.md](./tasks.md) | Implementation checklist |
-
+| Document                                 | Description                       |
+| ---------------------------------------- | --------------------------------- |
+| [requirements.md](./requirements.md)     | Basic project requirements        |
+| [prd.md](./prd.md)                       | Product Requirements Document     |
+| [architecture.md](./architecture.md)     | System architecture and data flow |
+| [data-model.md](./data-model.md)         | Data model specifications         |
+| [api-spec.md](./api-spec.md)             | Complete API specification        |
+| [error-handling.md](./error-handling.md) | Error handling strategy           |
+| [logging.md](./logging.md)               | Logging implementation            |
+| [testing.md](./testing.md)               | Testing strategy                  |
+| [swagger.md](./swagger.md)               | Swagger setup guide               |
+| [tasks.md](./tasks.md)                   | Implementation checklist          |
