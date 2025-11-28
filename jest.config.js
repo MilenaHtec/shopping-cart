@@ -19,6 +19,9 @@ module.exports = {
       statements: 80
     }
   },
-  verbose: true
+  verbose: true,
+  // Mock uuid module
+  moduleNameMapper: {
+    "^uuid$": "<rootDir>/tests/__mocks__/uuid.ts"
+  }
 };
-
