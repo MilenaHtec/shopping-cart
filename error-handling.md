@@ -33,8 +33,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     success: false,
     error: {
       message: err.message,
-      statusCode: statusCode
-    }
+      statusCode: statusCode,
+    },
   });
 });
 ```
@@ -57,21 +57,21 @@ All error responses follow this standard JSON structure:
 
 ### Response Fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| success | boolean | Always `false` for errors |
-| error.message | string | Human-readable error description |
-| error.statusCode | number | HTTP status code |
+| Field            | Type    | Description                      |
+| ---------------- | ------- | -------------------------------- |
+| success          | boolean | Always `false` for errors        |
+| error.message    | string  | Human-readable error description |
+| error.statusCode | number  | HTTP status code                 |
 
 ---
 
 ## HTTP Status Codes
 
-| Code | Status | When to Use |
-|------|--------|-------------|
-| 400 | Bad Request | Invalid input, validation errors, missing required fields |
-| 404 | Not Found | Item not found in cart, resource doesn't exist |
-| 500 | Internal Server Error | Unexpected server errors, unhandled exceptions |
+| Code | Status                | When to Use                                               |
+| ---- | --------------------- | --------------------------------------------------------- |
+| 400  | Bad Request           | Invalid input, validation errors, missing required fields |
+| 404  | Not Found             | Item not found in cart, resource doesn't exist            |
+| 500  | Internal Server Error | Unexpected server errors, unhandled exceptions            |
 
 ---
 
@@ -129,14 +129,14 @@ class BadRequestError extends AppError {
 
 **Examples:**
 
-| Scenario | Error Message |
-|----------|---------------|
-| Missing productId | `"productId is required"` |
-| Missing name | `"name is required"` |
-| Invalid price | `"price must be greater than 0"` |
-| Invalid quantity | `"quantity must be at least 1"` |
-| Empty update body | `"At least one field (quantity or price) must be provided"` |
-| Empty cart checkout | `"Cannot checkout with an empty cart"` |
+| Scenario            | Error Message                                               |
+| ------------------- | ----------------------------------------------------------- |
+| Missing productId   | `"productId is required"`                                   |
+| Missing name        | `"name is required"`                                        |
+| Invalid price       | `"price must be greater than 0"`                            |
+| Invalid quantity    | `"quantity must be at least 1"`                             |
+| Empty update body   | `"At least one field (quantity or price) must be provided"` |
+| Empty cart checkout | `"Cannot checkout with an empty cart"`                      |
 
 **Response:**
 
@@ -158,8 +158,8 @@ class BadRequestError extends AppError {
 
 **Examples:**
 
-| Scenario | Error Message |
-|----------|---------------|
+| Scenario                 | Error Message                                  |
+| ------------------------ | ---------------------------------------------- |
 | Update non-existent item | `"Item with productId {id} not found in cart"` |
 | Delete non-existent item | `"Item with productId {id} not found in cart"` |
 
@@ -183,9 +183,9 @@ class BadRequestError extends AppError {
 
 **Examples:**
 
-| Scenario | Error Message |
-|----------|---------------|
-| Unexpected exception | `"Internal server error"` |
+| Scenario                    | Error Message             |
+| --------------------------- | ------------------------- |
+| Unexpected exception        | `"Internal server error"` |
 | Unhandled promise rejection | `"Internal server error"` |
 
 **Response:**
@@ -206,14 +206,14 @@ class BadRequestError extends AppError {
 
 ## Error Handling by Endpoint
 
-| Endpoint | Possible Errors |
-|----------|----------------|
-| GET /cart | 500 (unexpected) |
-| POST /cart | 400 (validation), 500 |
-| PUT /cart/:productId | 400 (validation), 404 (not found), 500 |
-| DELETE /cart/:productId | 404 (not found), 500 |
-| DELETE /cart | 500 (unexpected) |
-| POST /cart/checkout | 400 (empty cart), 500 |
+| Endpoint                | Possible Errors                        |
+| ----------------------- | -------------------------------------- |
+| GET /cart               | 500 (unexpected)                       |
+| POST /cart              | 400 (validation), 500                  |
+| PUT /cart/:productId    | 400 (validation), 404 (not found), 500 |
+| DELETE /cart/:productId | 404 (not found), 500                   |
+| DELETE /cart            | 500 (unexpected)                       |
+| POST /cart/checkout     | 400 (empty cart), 500                  |
 
 ---
 
@@ -225,24 +225,24 @@ class BadRequestError extends AppError {
 const addItemValidation = {
   productId: {
     required: true,
-    type: 'number',
-    validate: (v) => Number.isInteger(v) && v > 0
+    type: "number",
+    validate: (v) => Number.isInteger(v) && v > 0,
   },
   name: {
     required: true,
-    type: 'string',
-    validate: (v) => v.trim().length > 0
+    type: "string",
+    validate: (v) => v.trim().length > 0,
   },
   price: {
     required: true,
-    type: 'number',
-    validate: (v) => v > 0
+    type: "number",
+    validate: (v) => v > 0,
   },
   quantity: {
     required: true,
-    type: 'number',
-    validate: (v) => Number.isInteger(v) && v >= 1
-  }
+    type: "number",
+    validate: (v) => Number.isInteger(v) && v >= 1,
+  },
 };
 ```
 
@@ -252,14 +252,14 @@ const addItemValidation = {
 const updateItemValidation = {
   quantity: {
     required: false,
-    type: 'number',
-    validate: (v) => Number.isInteger(v) && v >= 1
+    type: "number",
+    validate: (v) => Number.isInteger(v) && v >= 1,
   },
   price: {
     required: false,
-    type: 'number',
-    validate: (v) => v > 0
-  }
+    type: "number",
+    validate: (v) => v > 0,
+  },
   // At least one field must be provided
 };
 ```
@@ -274,19 +274,19 @@ const addItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Validate input
     const { productId, name, price, quantity } = req.body;
-    
+
     if (!productId) {
-      throw new ValidationError('productId is required');
+      throw new ValidationError("productId is required");
     }
-    
+
     // Business logic
     const cart = cartService.addItem({ productId, name, price, quantity });
-    
+
     // Success response
     res.status(201).json({
       success: true,
-      message: 'Item added to cart',
-      data: cart
+      message: "Item added to cart",
+      data: cart,
     });
   } catch (error) {
     next(error); // Pass to global error handler
@@ -309,7 +309,7 @@ const asyncHandler = (fn: Function) => {
 };
 
 // Usage
-router.post('/cart', asyncHandler(cartController.addItem));
+router.post("/cart", asyncHandler(cartController.addItem));
 ```
 
 ---
@@ -326,7 +326,7 @@ logger.error({
   stack: err.stack,
   path: req.path,
   method: req.method,
-  timestamp: new Date().toISOString()
+  timestamp: new Date().toISOString(),
 });
 ```
 
