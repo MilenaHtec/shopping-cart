@@ -346,3 +346,20 @@ logger.error({
 4. **Use consistent response format** - Easier for frontend to handle
 5. **Validate early** - Fail fast on invalid input
 6. **Keep error messages user-friendly** - Clear and actionable
+
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [requirements.md](./requirements.md) | Basic project requirements |
+| [prd.md](./prd.md) | Product Requirements Document |
+| [architecture.md](./architecture.md) | System architecture and data flow |
+| [data-model.md](./data-model.md) | Data model specifications |
+| [api-spec.md](./api-spec.md) | Complete API specification |
+| [logging.md](./logging.md) | Logging implementation |
+| [testing.md](./testing.md) | Testing strategy |
+| [swagger.md](./swagger.md) | Swagger setup guide |
+| [tasks.md](./tasks.md) | Implementation checklist |
+| [rules.md](./rules.md) | Development best practices |

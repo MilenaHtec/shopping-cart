@@ -22,3 +22,20 @@ The data will be stored in an in-memory database, with essential error handling,
 ## Technical Constraints
 
 - Use an in-memory database.
+
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [prd.md](./prd.md) | Detailed Product Requirements Document |
+| [architecture.md](./architecture.md) | System architecture and data flow |
+| [data-model.md](./data-model.md) | Data model specifications |
+| [api-spec.md](./api-spec.md) | Complete API specification |
+| [error-handling.md](./error-handling.md) | Error handling strategy |
+| [logging.md](./logging.md) | Logging implementation |
+| [testing.md](./testing.md) | Testing strategy |
+| [swagger.md](./swagger.md) | Swagger setup guide |
+| [tasks.md](./tasks.md) | Implementation checklist |
+| [rules.md](./rules.md) | Development best practices |

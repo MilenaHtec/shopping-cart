@@ -291,3 +291,20 @@ const logger = winston.createLogger({
 4. **Use structured logging** - JSON format for easy parsing and searching
 5. **Log request/response cycle** - Track the full lifecycle of each request
 6. **Include timestamps** - Essential for debugging and auditing
+
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [requirements.md](./requirements.md) | Basic project requirements |
+| [prd.md](./prd.md) | Product Requirements Document |
+| [architecture.md](./architecture.md) | System architecture and data flow |
+| [data-model.md](./data-model.md) | Data model specifications |
+| [api-spec.md](./api-spec.md) | Complete API specification |
+| [error-handling.md](./error-handling.md) | Error handling strategy |
+| [testing.md](./testing.md) | Testing strategy |
+| [swagger.md](./swagger.md) | Swagger setup guide |
+| [tasks.md](./tasks.md) | Implementation checklist |
+| [rules.md](./rules.md) | Development best practices |

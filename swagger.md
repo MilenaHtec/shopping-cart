@@ -561,3 +561,20 @@ router.post("/cart/checkout", cartController.checkout);
 5. Fill in parameters/body
 6. Click "Execute"
 7. View response
+
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [requirements.md](./requirements.md) | Basic project requirements |
+| [prd.md](./prd.md) | Product Requirements Document |
+| [architecture.md](./architecture.md) | System architecture and data flow |
+| [data-model.md](./data-model.md) | Data model specifications |
+| [api-spec.md](./api-spec.md) | Complete API specification |
+| [error-handling.md](./error-handling.md) | Error handling strategy |
+| [logging.md](./logging.md) | Logging implementation |
+| [testing.md](./testing.md) | Testing strategy |
+| [tasks.md](./tasks.md) | Implementation checklist |
+| [rules.md](./rules.md) | Development best practices |

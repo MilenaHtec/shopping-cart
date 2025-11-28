@@ -553,3 +553,20 @@ npm test cart.service.test.ts
 4. **Use beforeEach** - Reset state before each test
 5. **Test edge cases** - Empty cart, invalid input, boundary values
 6. **Keep tests independent** - Tests should not depend on each other
+
+---
+
+## Related Documents
+
+| Document | Description |
+|----------|-------------|
+| [requirements.md](./requirements.md) | Basic project requirements |
+| [prd.md](./prd.md) | Product Requirements Document |
+| [architecture.md](./architecture.md) | System architecture and data flow |
+| [data-model.md](./data-model.md) | Data model specifications |
+| [api-spec.md](./api-spec.md) | Complete API specification |
+| [error-handling.md](./error-handling.md) | Error handling strategy |
+| [logging.md](./logging.md) | Logging implementation |
+| [swagger.md](./swagger.md) | Swagger setup guide |
+| [tasks.md](./tasks.md) | Implementation checklist |
+| [rules.md](./rules.md) | Development best practices |
