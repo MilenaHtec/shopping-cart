@@ -541,14 +541,14 @@ router.post("/cart/checkout", cartController.checkout);
 
 ## API Endpoints Summary
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /cart | Get cart contents |
-| POST | /cart | Add item to cart |
-| PUT | /cart/{productId} | Update item |
-| DELETE | /cart/{productId} | Remove item |
-| DELETE | /cart | Clear cart |
-| POST | /cart/checkout | Checkout |
+| Method | Endpoint          | Description       |
+| ------ | ----------------- | ----------------- |
+| GET    | /cart             | Get cart contents |
+| POST   | /cart             | Add item to cart  |
+| PUT    | /cart/{productId} | Update item       |
+| DELETE | /cart/{productId} | Remove item       |
+| DELETE | /cart             | Clear cart        |
+| POST   | /cart/checkout    | Checkout          |
 
 ---
 
