@@ -14,14 +14,14 @@ All requests and responses use `application/json`.
 
 ## Endpoints Overview
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/cart` | Get cart contents |
-| POST | `/cart` | Add item to cart |
-| PUT | `/cart/:productId` | Update item quantity/price |
-| DELETE | `/cart/:productId` | Remove single item |
-| DELETE | `/cart` | Clear entire cart |
-| POST | `/cart/checkout` | Checkout and clear cart |
+| Method | Endpoint           | Description                |
+| ------ | ------------------ | -------------------------- |
+| GET    | `/cart`            | Get cart contents          |
+| POST   | `/cart`            | Add item to cart           |
+| PUT    | `/cart/:productId` | Update item quantity/price |
+| DELETE | `/cart/:productId` | Remove single item         |
+| DELETE | `/cart`            | Clear entire cart          |
+| POST   | `/cart/checkout`   | Checkout and clear cart    |
 
 ---
 
@@ -47,7 +47,7 @@ No request body required.
       {
         "productId": 1,
         "name": "Milk",
-        "price": 2.50,
+        "price": 2.5,
         "quantity": 2
       },
       {
@@ -95,19 +95,19 @@ Content-Type: application/json
 {
   "productId": 1,
   "name": "Milk",
-  "price": 2.50,
+  "price": 2.5,
   "quantity": 2
 }
 ```
 
 ### Request Body Fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| productId | number | Yes | Unique product identifier |
-| name | string | Yes | Product display name |
-| price | number | Yes | Unit price (must be > 0) |
-| quantity | number | Yes | Quantity to add (must be >= 1) |
+| Field     | Type   | Required | Description                    |
+| --------- | ------ | -------- | ------------------------------ |
+| productId | number | Yes      | Unique product identifier      |
+| name      | string | Yes      | Product display name           |
+| price     | number | Yes      | Unit price (must be > 0)       |
+| quantity  | number | Yes      | Quantity to add (must be >= 1) |
 
 ### Response 201 Created
 
@@ -120,11 +120,11 @@ Content-Type: application/json
       {
         "productId": 1,
         "name": "Milk",
-        "price": 2.50,
+        "price": 2.5,
         "quantity": 2
       }
     ],
-    "total": 5.00,
+    "total": 5.0,
     "itemCount": 2
   }
 }
@@ -146,12 +146,12 @@ Missing or invalid fields.
 
 ### Validation Errors
 
-| Error | Cause |
-|-------|-------|
-| `productId is required` | Missing productId field |
-| `name is required` | Missing name field |
-| `price must be greater than 0` | Price is 0 or negative |
-| `quantity must be at least 1` | Quantity is 0 or negative |
+| Error                          | Cause                     |
+| ------------------------------ | ------------------------- |
+| `productId is required`        | Missing productId field   |
+| `name is required`             | Missing name field        |
+| `price must be greater than 0` | Price is 0 or negative    |
+| `quantity must be at least 1`  | Quantity is 0 or negative |
 
 ---
 
@@ -168,8 +168,8 @@ Content-Type: application/json
 
 ### URL Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description                 |
+| --------- | ------ | --------------------------- |
 | productId | number | ID of the product to update |
 
 ### Request Body
@@ -184,7 +184,7 @@ Or update price:
 
 ```json
 {
-  "price": 3.00
+  "price": 3.0
 }
 ```
 
@@ -193,16 +193,16 @@ Or update both:
 ```json
 {
   "quantity": 5,
-  "price": 3.00
+  "price": 3.0
 }
 ```
 
 ### Request Body Fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| quantity | number | No | New quantity (must be >= 1) |
-| price | number | No | New unit price (must be > 0) |
+| Field    | Type   | Required | Description                  |
+| -------- | ------ | -------- | ---------------------------- |
+| quantity | number | No       | New quantity (must be >= 1)  |
+| price    | number | No       | New unit price (must be > 0) |
 
 **Note:** At least one field (quantity or price) must be provided.
 
@@ -217,11 +217,11 @@ Or update both:
       {
         "productId": 1,
         "name": "Milk",
-        "price": 3.00,
+        "price": 3.0,
         "quantity": 5
       }
     ],
-    "total": 15.00,
+    "total": 15.0,
     "itemCount": 5
   }
 }
@@ -265,8 +265,8 @@ DELETE /api/cart/1
 
 ### URL Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Parameter | Type   | Description                 |
+| --------- | ------ | --------------------------- |
 | productId | number | ID of the product to remove |
 
 ### Response 200 OK
@@ -349,7 +349,7 @@ No request body required.
       {
         "productId": 1,
         "name": "Milk",
-        "price": 2.50,
+        "price": 2.5,
         "quantity": 2
       },
       {
@@ -396,13 +396,13 @@ All error responses follow this standard format:
 
 ### HTTP Status Codes
 
-| Code | Status | Description |
-|------|--------|-------------|
-| 200 | OK | Successful GET, PUT, DELETE |
-| 201 | Created | Successful POST (item added) |
-| 400 | Bad Request | Validation error, missing fields |
-| 404 | Not Found | Item not found in cart |
-| 500 | Internal Server Error | Unexpected server error |
+| Code | Status                | Description                      |
+| ---- | --------------------- | -------------------------------- |
+| 200  | OK                    | Successful GET, PUT, DELETE      |
+| 201  | Created               | Successful POST (item added)     |
+| 400  | Bad Request           | Validation error, missing fields |
+| 404  | Not Found             | Item not found in cart           |
+| 500  | Internal Server Error | Unexpected server error          |
 
 ---
 
@@ -411,6 +411,7 @@ All error responses follow this standard format:
 ### Example: Complete Shopping Flow
 
 **1. Add first item:**
+
 ```http
 POST /api/cart
 {
@@ -423,6 +424,7 @@ POST /api/cart
 ```
 
 **2. Add second item:**
+
 ```http
 POST /api/cart
 {
@@ -435,6 +437,7 @@ POST /api/cart
 ```
 
 **3. Update quantity:**
+
 ```http
 PUT /api/cart/1
 {
@@ -444,18 +447,21 @@ PUT /api/cart/1
 ```
 
 **4. Check cart:**
+
 ```http
 GET /api/cart
 → 200 OK (total: 11.99)
 ```
 
 **5. Remove item:**
+
 ```http
 DELETE /api/cart/2
 → 200 OK
 ```
 
 **6. Checkout:**
+
 ```http
 POST /api/cart/checkout
 → 200 OK (returns order summary, clears cart)
@@ -467,13 +473,13 @@ POST /api/cart/checkout
 
 ### Request Headers
 
-| Header | Value | Required |
-|--------|-------|----------|
+| Header       | Value            | Required           |
+| ------------ | ---------------- | ------------------ |
 | Content-Type | application/json | Yes (for POST/PUT) |
 
 ### Response Headers
 
-| Header | Value |
-|--------|-------|
-| Content-Type | application/json |
+| Header          | Value               |
+| --------------- | ------------------- |
+| Content-Type    | application/json    |
 | X-Response-Time | Response time in ms |
