@@ -81,14 +81,14 @@ http://localhost:3001/api
 
 ## 🔗 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/cart` | Get cart contents |
-| `POST` | `/cart` | Add item to cart |
-| `PUT` | `/cart/:productId` | Update item quantity/price |
-| `DELETE` | `/cart/:productId` | Remove single item |
-| `DELETE` | `/cart` | Clear entire cart |
-| `POST` | `/cart/checkout` | Process checkout |
+| Method   | Endpoint           | Description                |
+| -------- | ------------------ | -------------------------- |
+| `GET`    | `/cart`            | Get cart contents          |
+| `POST`   | `/cart`            | Add item to cart           |
+| `PUT`    | `/cart/:productId` | Update item quantity/price |
+| `DELETE` | `/cart/:productId` | Remove single item         |
+| `DELETE` | `/cart`            | Clear entire cart          |
+| `POST`   | `/cart/checkout`   | Process checkout           |
 
 ---
 
@@ -108,6 +108,7 @@ curl -X POST http://localhost:3001/api/cart \
 ```
 
 **Response (201 Created):**
+
 ```json
 {
   "success": true,
@@ -154,6 +155,7 @@ curl -X POST http://localhost:3001/api/cart/checkout
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -196,27 +198,27 @@ shopping-cart/
 
 ## 🛠 Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| Runtime | Node.js |
-| Framework | Express.js |
-| Language | TypeScript |
-| Testing | Jest |
-| Logging | Winston |
+| Component     | Technology        |
+| ------------- | ----------------- |
+| Runtime       | Node.js           |
+| Framework     | Express.js        |
+| Language      | TypeScript        |
+| Testing       | Jest              |
+| Logging       | Winston           |
 | Documentation | Swagger (OpenAPI) |
-| Database | In-Memory |
+| Database      | In-Memory         |
 
 ---
 
 ## 📋 Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build TypeScript to JavaScript |
-| `npm start` | Start production server |
-| `npm test` | Run unit tests |
-| `npm run test:coverage` | Run tests with coverage |
+| Script                  | Description                    |
+| ----------------------- | ------------------------------ |
+| `npm run dev`           | Start development server       |
+| `npm run build`         | Build TypeScript to JavaScript |
+| `npm start`             | Start production server        |
+| `npm test`              | Run unit tests                 |
+| `npm run test:coverage` | Run tests with coverage        |
 
 ---
 
@@ -225,6 +227,7 @@ shopping-cart/
 ### Response Format
 
 **Success:**
+
 ```json
 {
   "success": true,
@@ -234,6 +237,7 @@ shopping-cart/
 ```
 
 **Error:**
+
 ```json
 {
   "success": false,
@@ -246,13 +250,13 @@ shopping-cart/
 
 ### HTTP Status Codes
 
-| Code | Description |
-|------|-------------|
-| `200` | Success |
-| `201` | Created |
+| Code  | Description                    |
+| ----- | ------------------------------ |
+| `200` | Success                        |
+| `201` | Created                        |
 | `400` | Bad Request / Validation Error |
-| `404` | Not Found |
-| `500` | Internal Server Error |
+| `404` | Not Found                      |
+| `500` | Internal Server Error          |
 
 ---
 
@@ -265,6 +269,7 @@ Coverage:    96.84%
 ```
 
 ### Test Categories
+
 - Add item (5 tests)
 - Update item (4 tests)
 - Remove item (4 tests)
@@ -277,19 +282,19 @@ Coverage:    96.84%
 
 ## 📚 Documentation
 
-| Document | Description |
-|----------|-------------|
-| [requirements.md](./requirements.md) | Project requirements |
-| [prd.md](./prd.md) | Product Requirements Document |
-| [architecture.md](./architecture.md) | System architecture |
-| [data-model.md](./data-model.md) | Data models |
-| [api-spec.md](./api-spec.md) | API specification |
-| [error-handling.md](./error-handling.md) | Error handling |
-| [logging.md](./logging.md) | Logging strategy |
-| [testing.md](./testing.md) | Testing strategy |
-| [swagger.md](./swagger.md) | Swagger setup |
-| [tasks.md](./tasks.md) | Implementation tasks |
-| [rules.md](./rules.md) | Development rules |
+| Document                                 | Description                   |
+| ---------------------------------------- | ----------------------------- |
+| [requirements.md](./requirements.md)     | Project requirements          |
+| [prd.md](./prd.md)                       | Product Requirements Document |
+| [architecture.md](./architecture.md)     | System architecture           |
+| [data-model.md](./data-model.md)         | Data models                   |
+| [api-spec.md](./api-spec.md)             | API specification             |
+| [error-handling.md](./error-handling.md) | Error handling                |
+| [logging.md](./logging.md)               | Logging strategy              |
+| [testing.md](./testing.md)               | Testing strategy              |
+| [swagger.md](./swagger.md)               | Swagger setup                 |
+| [tasks.md](./tasks.md)                   | Implementation tasks          |
+| [rules.md](./rules.md)                   | Development rules             |
 
 ---
 
