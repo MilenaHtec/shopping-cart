@@ -54,16 +54,16 @@ src/
 
 ### Test Categories
 
-| Category | Description | Priority |
-|----------|-------------|----------|
-| Add item | Adding items to cart | High |
-| Update item | Updating quantity/price | High |
-| Remove item | Removing items from cart | High |
-| Clear cart | Clearing entire cart | High |
-| Get cart | Retrieving cart contents | High |
-| Checkout | Processing checkout | High |
-| Validation | Input validation | Medium |
-| Edge cases | Empty cart, invalid data | Medium |
+| Category    | Description              | Priority |
+| ----------- | ------------------------ | -------- |
+| Add item    | Adding items to cart     | High     |
+| Update item | Updating quantity/price  | High     |
+| Remove item | Removing items from cart | High     |
+| Clear cart  | Clearing entire cart     | High     |
+| Get cart    | Retrieving cart contents | High     |
+| Checkout    | Processing checkout      | High     |
+| Validation  | Input validation         | Medium   |
+| Edge cases  | Empty cart, invalid data | Medium   |
 
 ---
 
@@ -81,19 +81,19 @@ describe("CartService - addItem", () => {
 
   test("should add a new item to empty cart", () => {
     const item = { productId: 1, name: "Milk", price: 2.5, quantity: 2 };
-    
+
     const result = cartService.addItem(item);
-    
+
     expect(result.items).toHaveLength(1);
     expect(result.items[0]).toEqual(item);
   });
 
   test("should increment quantity when adding existing item", () => {
     const item = { productId: 1, name: "Milk", price: 2.5, quantity: 2 };
-    
+
     cartService.addItem(item);
     cartService.addItem({ ...item, quantity: 3 });
-    
+
     const cart = cartService.getCart();
     expect(cart.items).toHaveLength(1);
     expect(cart.items[0].quantity).toBe(5);
@@ -101,19 +101,19 @@ describe("CartService - addItem", () => {
 
   test("should calculate correct total after adding item", () => {
     const item = { productId: 1, name: "Milk", price: 2.5, quantity: 2 };
-    
+
     const result = cartService.addItem(item);
-    
+
     expect(result.total).toBe(5.0);
   });
 
   test("should add multiple different items", () => {
     const item1 = { productId: 1, name: "Milk", price: 2.5, quantity: 2 };
     const item2 = { productId: 2, name: "Bread", price: 1.99, quantity: 1 };
-    
+
     cartService.addItem(item1);
     cartService.addItem(item2);
-    
+
     const cart = cartService.getCart();
     expect(cart.items).toHaveLength(2);
     expect(cart.total).toBe(6.99);
@@ -131,26 +131,31 @@ describe("CartService - updateItem", () => {
 
   beforeEach(() => {
     cartService = new CartService();
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
   });
 
   test("should update item quantity", () => {
     const result = cartService.updateItem(1, { quantity: 5 });
-    
+
     expect(result.items[0].quantity).toBe(5);
     expect(result.total).toBe(12.5);
   });
 
   test("should update item price", () => {
     const result = cartService.updateItem(1, { price: 3.0 });
-    
+
     expect(result.items[0].price).toBe(3.0);
     expect(result.total).toBe(6.0);
   });
 
   test("should update both quantity and price", () => {
     const result = cartService.updateItem(1, { quantity: 3, price: 3.0 });
-    
+
     expect(result.items[0].quantity).toBe(3);
     expect(result.items[0].price).toBe(3.0);
     expect(result.total).toBe(9.0);
@@ -174,27 +179,37 @@ describe("CartService - removeItem", () => {
 
   beforeEach(() => {
     cartService = new CartService();
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 1 });
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 1,
+    });
   });
 
   test("should remove item from cart", () => {
     const result = cartService.removeItem(1);
-    
+
     expect(result.items).toHaveLength(1);
     expect(result.items[0].productId).toBe(2);
   });
 
   test("should recalculate total after removing item", () => {
     const result = cartService.removeItem(1);
-    
+
     expect(result.total).toBe(1.99);
   });
 
   test("should return empty cart when removing last item", () => {
     cartService.removeItem(1);
     const result = cartService.removeItem(2);
-    
+
     expect(result.items).toHaveLength(0);
     expect(result.total).toBe(0);
   });
@@ -217,32 +232,42 @@ describe("CartService - clearCart", () => {
 
   beforeEach(() => {
     cartService = new CartService();
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 1 });
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 1,
+    });
   });
 
   test("should clear all items from cart", () => {
     const result = cartService.clearCart();
-    
+
     expect(result.items).toHaveLength(0);
   });
 
   test("should reset total to zero", () => {
     const result = cartService.clearCart();
-    
+
     expect(result.total).toBe(0);
   });
 
   test("should reset itemCount to zero", () => {
     const result = cartService.clearCart();
-    
+
     expect(result.itemCount).toBe(0);
   });
 
   test("should work on already empty cart", () => {
     cartService.clearCart();
     const result = cartService.clearCart();
-    
+
     expect(result.items).toHaveLength(0);
     expect(result.total).toBe(0);
   });
@@ -263,36 +288,66 @@ describe("CartService - getCart", () => {
 
   test("should return empty cart initially", () => {
     const result = cartService.getCart();
-    
+
     expect(result.items).toHaveLength(0);
     expect(result.total).toBe(0);
     expect(result.itemCount).toBe(0);
   });
 
   test("should return all items in cart", () => {
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 1 });
-    
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 1,
+    });
+
     const result = cartService.getCart();
-    
+
     expect(result.items).toHaveLength(2);
   });
 
   test("should calculate correct total", () => {
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 3 });
-    
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 3,
+    });
+
     const result = cartService.getCart();
-    
+
     expect(result.total).toBe(10.97); // (2.5*2) + (1.99*3)
   });
 
   test("should calculate correct itemCount", () => {
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 3 });
-    
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 3,
+    });
+
     const result = cartService.getCart();
-    
+
     expect(result.itemCount).toBe(5); // 2 + 3
   });
 });
@@ -308,41 +363,51 @@ describe("CartService - checkout", () => {
 
   beforeEach(() => {
     cartService = new CartService();
-    cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 2 });
-    cartService.addItem({ productId: 2, name: "Bread", price: 1.99, quantity: 1 });
+    cartService.addItem({
+      productId: 1,
+      name: "Milk",
+      price: 2.5,
+      quantity: 2,
+    });
+    cartService.addItem({
+      productId: 2,
+      name: "Bread",
+      price: 1.99,
+      quantity: 1,
+    });
   });
 
   test("should return order summary with all items", () => {
     const result = cartService.checkout();
-    
+
     expect(result.items).toHaveLength(2);
     expect(result.total).toBe(6.99);
   });
 
   test("should generate orderId", () => {
     const result = cartService.checkout();
-    
+
     expect(result.orderId).toBeDefined();
     expect(result.orderId).toMatch(/^ORD-/);
   });
 
   test("should include checkoutTime", () => {
     const result = cartService.checkout();
-    
+
     expect(result.checkoutTime).toBeDefined();
   });
 
   test("should clear cart after checkout", () => {
     cartService.checkout();
     const cart = cartService.getCart();
-    
+
     expect(cart.items).toHaveLength(0);
     expect(cart.total).toBe(0);
   });
 
   test("should throw error when cart is empty", () => {
     cartService.clearCart();
-    
+
     expect(() => {
       cartService.checkout();
     }).toThrow("Cannot checkout with an empty cart");
@@ -376,13 +441,23 @@ describe("CartService - Validation", () => {
 
   test("should throw error for price <= 0", () => {
     expect(() => {
-      cartService.addItem({ productId: 1, name: "Milk", price: 0, quantity: 2 });
+      cartService.addItem({
+        productId: 1,
+        name: "Milk",
+        price: 0,
+        quantity: 2,
+      });
     }).toThrow("price must be greater than 0");
   });
 
   test("should throw error for quantity < 1", () => {
     expect(() => {
-      cartService.addItem({ productId: 1, name: "Milk", price: 2.5, quantity: 0 });
+      cartService.addItem({
+        productId: 1,
+        name: "Milk",
+        price: 2.5,
+        quantity: 0,
+      });
     }).toThrow("quantity must be at least 1");
   });
 });
@@ -424,12 +499,12 @@ npm test cart.service.test.ts
 
 ## Test Coverage Goals
 
-| Metric | Target |
-|--------|--------|
-| Statements | > 80% |
-| Branches | > 80% |
-| Functions | > 80% |
-| Lines | > 80% |
+| Metric     | Target |
+| ---------- | ------ |
+| Statements | > 80%  |
+| Branches   | > 80%  |
+| Functions  | > 80%  |
+| Lines      | > 80%  |
 
 ---
 
