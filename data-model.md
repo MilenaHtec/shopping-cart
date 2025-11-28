@@ -58,11 +58,11 @@ Represents a single product in the shopping cart.
 
 ```javascript
 CartItem = {
-  productId: number,    // Required, unique within cart
-  name: string,         // Required, non-empty
-  price: number,        // Required, must be > 0
-  quantity: number      // Required, must be >= 1
-}
+  productId: number, // Required, unique within cart
+  name: string, // Required, non-empty
+  price: number, // Required, must be > 0
+  quantity: number, // Required, must be >= 1
+};
 ```
 
 #### TypeScript Interface
@@ -137,7 +137,7 @@ interface Cart {
     {
       "productId": 205,
       "name": "USB-C Cable",
-      "price": 12.50,
+      "price": 12.5,
       "quantity": 3
     }
   ]
@@ -171,15 +171,12 @@ These values are calculated on-the-fly and returned in API responses:
 ```javascript
 // Total price calculation
 const total = cart.items.reduce(
-  (sum, item) => sum + (item.price * item.quantity), 
+  (sum, item) => sum + item.price * item.quantity,
   0
 );
 
 // Total item count
-const itemCount = cart.items.reduce(
-  (count, item) => count + item.quantity, 
-  0
-);
+const itemCount = cart.items.reduce((count, item) => count + item.quantity, 0);
 
 // Unique products count
 const uniqueItems = cart.items.length;
@@ -412,7 +409,7 @@ interface ApiResponse<T> {
     {
       "productId": 205,
       "name": "USB-C Cable",
-      "price": 12.50,
+      "price": 12.5,
       "quantity": 3
     },
     {
@@ -424,7 +421,7 @@ interface ApiResponse<T> {
     {
       "productId": 412,
       "name": "Monitor Stand",
-      "price": 45.00,
+      "price": 45.0,
       "quantity": 1
     }
   ]
@@ -432,6 +429,7 @@ interface ApiResponse<T> {
 ```
 
 **Computed Values:**
+
 - **Total:** (29.99 × 2) + (12.50 × 3) + (89.99 × 1) + (45.00 × 1) = **$232.47**
 - **Item Count:** 2 + 3 + 1 + 1 = **7 items**
 - **Unique Items:** **4 products**
