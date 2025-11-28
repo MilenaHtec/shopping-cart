@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import {
   Cart,
   CartItem,
@@ -199,7 +198,7 @@ class CartService {
     }
 
     const orderSummary: CheckoutResponse = {
-      orderId: `ORD-${Date.now()}-${uuidv4().slice(0, 8)}`,
+      orderId: `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 10)}`,
       items: [...this.cart.items],
       total: this.calculateTotal(),
       itemCount: this.calculateItemCount(),
