@@ -22,4 +22,3 @@ The data will be stored in an in-memory database, with essential error handling,
 ## Technical Constraints
 
 - Use an in-memory database.
-
