@@ -19,6 +19,7 @@ This document outlines the requirements for building a backend REST API for mana
 ### 2.1 Purpose
 
 Build a simple, robust backend API that handles the complete lifecycle of a shopping cart:
+
 - Adding products to cart
 - Updating quantities and prices
 - Removing products
@@ -27,13 +28,13 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 ### 2.2 Goals
 
-| Goal | Description |
-|------|-------------|
-| Functional | Implement all CRUD operations for shopping cart management |
-| Reliability | Handle errors gracefully with meaningful error messages |
+| Goal            | Description                                                    |
+| --------------- | -------------------------------------------------------------- |
+| Functional      | Implement all CRUD operations for shopping cart management     |
+| Reliability     | Handle errors gracefully with meaningful error messages        |
 | Maintainability | Clean, well-structured code with proper separation of concerns |
-| Observability | Log all major activities for debugging and monitoring |
-| Quality | Verify functionality through comprehensive unit tests |
+| Observability   | Log all major activities for debugging and monitoring          |
+| Quality         | Verify functionality through comprehensive unit tests          |
 
 ### 2.3 Target Users
 
@@ -46,15 +47,15 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 ## 3. Technical Stack
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Runtime | Node.js | Server-side JavaScript execution |
-| Framework | Express.js | Web framework for routing and middleware |
-| Language | TypeScript | Type safety and better developer experience |
-| Database | In-Memory (Array/Map) | Simple data storage without external dependencies |
-| Testing | Jest | Unit testing framework |
-| Logging | Winston | Structured logging |
-| Documentation | Swagger (OpenAPI) | Interactive API documentation |
+| Component     | Technology            | Purpose                                           |
+| ------------- | --------------------- | ------------------------------------------------- |
+| Runtime       | Node.js               | Server-side JavaScript execution                  |
+| Framework     | Express.js            | Web framework for routing and middleware          |
+| Language      | TypeScript            | Type safety and better developer experience       |
+| Database      | In-Memory (Array/Map) | Simple data storage without external dependencies |
+| Testing       | Jest                  | Unit testing framework                            |
+| Logging       | Winston               | Structured logging                                |
+| Documentation | Swagger (OpenAPI)     | Interactive API documentation                     |
 
 ---
 
@@ -63,14 +64,16 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 ### 4.1 Core Features
 
 #### FR-01: Add Item to Cart
+
 - **Description:** User can add a product to the shopping cart
-- **Behavior:** 
+- **Behavior:**
   - If product doesn't exist in cart → add new item
   - If product already exists → increment quantity
 - **Input:** productId, name, price, quantity
 - **Output:** Updated cart with total
 
 #### FR-02: Update Cart Item
+
 - **Description:** User can update quantity or price of an existing item
 - **Behavior:** Find item by productId and update specified fields
 - **Input:** productId (URL param), quantity and/or price (body)
@@ -78,6 +81,7 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 - **Error:** 404 if item not found
 
 #### FR-03: Remove Item from Cart
+
 - **Description:** User can remove a specific item from the cart
 - **Behavior:** Remove item matching the productId
 - **Input:** productId (URL param)
@@ -85,20 +89,23 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 - **Error:** 404 if item not found
 
 #### FR-04: Get Cart Contents
+
 - **Description:** User can retrieve current cart contents
 - **Behavior:** Return all items with calculated total and item count
 - **Input:** None
 - **Output:** Cart items, total price, total item count
 
 #### FR-05: Clear Cart
+
 - **Description:** User can remove all items from the cart
 - **Behavior:** Empty the cart completely
 - **Input:** None
 - **Output:** Empty cart with zero total
 
 #### FR-06: Checkout
+
 - **Description:** Process checkout and generate order summary
-- **Behavior:** 
+- **Behavior:**
   - Calculate final total
   - Generate order ID
   - Return order summary
@@ -109,14 +116,14 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 ### 4.2 Feature Summary Table
 
-| Feature | Endpoint | Method | Success | Error Codes |
-|---------|----------|--------|---------|-------------|
-| Add item | /cart | POST | 201 | 400 |
-| Update item | /cart/:productId | PUT | 200 | 400, 404 |
-| Remove item | /cart/:productId | DELETE | 200 | 404 |
-| Get cart | /cart | GET | 200 | - |
-| Clear cart | /cart | DELETE | 200 | - |
-| Checkout | /cart/checkout | POST | 200 | 400 |
+| Feature     | Endpoint         | Method | Success | Error Codes |
+| ----------- | ---------------- | ------ | ------- | ----------- |
+| Add item    | /cart            | POST   | 201     | 400         |
+| Update item | /cart/:productId | PUT    | 200     | 400, 404    |
+| Remove item | /cart/:productId | DELETE | 200     | 404         |
+| Get cart    | /cart            | GET    | 200     | -           |
+| Clear cart  | /cart            | DELETE | 200     | -           |
+| Checkout    | /cart/checkout   | POST   | 200     | 400         |
 
 ---
 
@@ -126,14 +133,14 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 **Requirement:** Log all major activities
 
-| Activity | Log Level | Example |
-|----------|-----------|---------|
-| Server startup | INFO | "Server started on port 3000" |
-| Incoming requests | INFO | "POST /api/cart" |
-| Business operations | INFO | "Item added to cart: productId=1" |
-| Validation errors | WARN | "Validation failed: price must be > 0" |
-| Not found errors | WARN | "Item not found: productId=999" |
-| Server errors | ERROR | "Internal server error" |
+| Activity            | Log Level | Example                                |
+| ------------------- | --------- | -------------------------------------- |
+| Server startup      | INFO      | "Server started on port 3000"          |
+| Incoming requests   | INFO      | "POST /api/cart"                       |
+| Business operations | INFO      | "Item added to cart: productId=1"      |
+| Validation errors   | WARN      | "Validation failed: price must be > 0" |
+| Not found errors    | WARN      | "Item not found: productId=999"        |
+| Server errors       | ERROR     | "Internal server error"                |
 
 **Implementation:** Winston logger with console and file transports.
 
@@ -141,12 +148,12 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 **Requirement:** Implement comprehensive error handling
 
-| Error Type | Status Code | When |
-|------------|-------------|------|
-| ValidationError | 400 | Invalid input data |
-| NotFoundError | 404 | Item not in cart |
-| BadRequestError | 400 | Empty cart checkout |
-| InternalError | 500 | Unexpected server error |
+| Error Type      | Status Code | When                    |
+| --------------- | ----------- | ----------------------- |
+| ValidationError | 400         | Invalid input data      |
+| NotFoundError   | 404         | Item not in cart        |
+| BadRequestError | 400         | Empty cart checkout     |
+| InternalError   | 500         | Unexpected server error |
 
 **Implementation:** Global Express error handler middleware with custom error classes.
 
@@ -154,15 +161,15 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 **Requirement:** Implement unit tests for cart operations
 
-| Test Category | Coverage |
-|---------------|----------|
-| Add item | New item, existing item, multiple items |
-| Update item | Quantity, price, both, not found |
-| Remove item | Success, not found |
-| Clear cart | With items, already empty |
-| Get cart | Empty, with items, total calculation |
-| Checkout | Success, empty cart error |
-| Validation | Missing fields, invalid values |
+| Test Category | Coverage                                |
+| ------------- | --------------------------------------- |
+| Add item      | New item, existing item, multiple items |
+| Update item   | Quantity, price, both, not found        |
+| Remove item   | Success, not found                      |
+| Clear cart    | With items, already empty               |
+| Get cart      | Empty, with items, total calculation    |
+| Checkout      | Success, empty cart error               |
+| Validation    | Missing fields, invalid values          |
 
 **Target:** > 80% code coverage
 
@@ -174,10 +181,10 @@ Build a simple, robust backend API that handles the complete lifecycle of a shop
 
 ```typescript
 interface CartItem {
-  productId: number;   // Unique product identifier
-  name: string;        // Product display name
-  price: number;       // Unit price (must be > 0)
-  quantity: number;    // Quantity in cart (must be >= 1)
+  productId: number; // Unique product identifier
+  name: string; // Product display name
+  price: number; // Unit price (must be > 0)
+  quantity: number; // Quantity in cart (must be >= 1)
 }
 ```
 
@@ -185,16 +192,16 @@ interface CartItem {
 
 ```typescript
 interface Cart {
-  items: CartItem[];   // Array of cart items
+  items: CartItem[]; // Array of cart items
 }
 ```
 
 ### 6.3 Computed Properties (returned in API responses)
 
-| Property | Type | Calculation |
-|----------|------|-------------|
-| total | number | SUM(item.price × item.quantity) |
-| itemCount | number | SUM(item.quantity) |
+| Property  | Type   | Calculation                     |
+| --------- | ------ | ------------------------------- |
+| total     | number | SUM(item.price × item.quantity) |
+| itemCount | number | SUM(item.quantity)              |
 
 ---
 
@@ -208,18 +215,19 @@ http://localhost:3000/api
 
 ### 7.2 Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /cart | Get cart contents |
-| POST | /cart | Add item to cart |
-| PUT | /cart/:productId | Update item quantity/price |
-| DELETE | /cart/:productId | Remove single item |
-| DELETE | /cart | Clear entire cart |
-| POST | /cart/checkout | Process checkout |
+| Method | Endpoint         | Description                |
+| ------ | ---------------- | -------------------------- |
+| GET    | /cart            | Get cart contents          |
+| POST   | /cart            | Add item to cart           |
+| PUT    | /cart/:productId | Update item quantity/price |
+| DELETE | /cart/:productId | Remove single item         |
+| DELETE | /cart            | Clear entire cart          |
+| POST   | /cart/checkout   | Process checkout           |
 
 ### 7.3 Standard Response Format
 
 **Success:**
+
 ```json
 {
   "success": true,
@@ -229,6 +237,7 @@ http://localhost:3000/api
 ```
 
 **Error:**
+
 ```json
 {
   "success": false,
@@ -279,19 +288,19 @@ User Response ← Error Handler ← Controller ← Service ←──┘
 
 ### 9.1 Add Item (POST /cart)
 
-| Field | Type | Required | Validation |
-|-------|------|----------|------------|
-| productId | number | Yes | Must be positive integer |
-| name | string | Yes | Non-empty string |
-| price | number | Yes | Must be > 0 |
-| quantity | number | Yes | Must be >= 1 |
+| Field     | Type   | Required | Validation               |
+| --------- | ------ | -------- | ------------------------ |
+| productId | number | Yes      | Must be positive integer |
+| name      | string | Yes      | Non-empty string         |
+| price     | number | Yes      | Must be > 0              |
+| quantity  | number | Yes      | Must be >= 1             |
 
 ### 9.2 Update Item (PUT /cart/:productId)
 
-| Field | Type | Required | Validation |
-|-------|------|----------|------------|
-| quantity | number | No | Must be >= 1 if provided |
-| price | number | No | Must be > 0 if provided |
+| Field    | Type   | Required | Validation               |
+| -------- | ------ | -------- | ------------------------ |
+| quantity | number | No       | Must be >= 1 if provided |
+| price    | number | No       | Must be > 0 if provided  |
 
 **Note:** At least one field must be provided.
 
@@ -299,12 +308,12 @@ User Response ← Error Handler ← Controller ← Service ←──┘
 
 ## 10. Technical Constraints
 
-| Constraint | Description |
-|------------|-------------|
-| Database | In-memory storage only (no external database) |
-| Persistence | Data is lost when server restarts |
-| Single cart | One global cart (no user sessions) |
-| Concurrency | Single-threaded Node.js execution |
+| Constraint  | Description                                   |
+| ----------- | --------------------------------------------- |
+| Database    | In-memory storage only (no external database) |
+| Persistence | Data is lost when server restarts             |
+| Single cart | One global cart (no user sessions)            |
+| Concurrency | Single-threaded Node.js execution             |
 
 ---
 
@@ -328,13 +337,13 @@ The following features are explicitly **NOT** included in this version:
 
 ## 12. Success Criteria
 
-| Criteria | Measurement |
-|----------|-------------|
-| All endpoints functional | 6/6 endpoints working correctly |
-| Error handling | All error cases return proper status codes |
-| Logging | All major activities logged |
-| Test coverage | > 80% code coverage |
-| Documentation | Swagger UI accessible and complete |
+| Criteria                 | Measurement                                |
+| ------------------------ | ------------------------------------------ |
+| All endpoints functional | 6/6 endpoints working correctly            |
+| Error handling           | All error cases return proper status codes |
+| Logging                  | All major activities logged                |
+| Test coverage            | > 80% code coverage                        |
+| Documentation            | Swagger UI accessible and complete         |
 
 ---
 
@@ -376,21 +385,21 @@ shopping-cart/
 
 ## 14. Related Documentation
 
-| Document | Purpose |
-|----------|---------|
-| [requirements.md](./requirements.md) | Basic project requirements |
-| [architecture.md](./architecture.md) | System architecture and data flow diagrams |
-| [data-model.md](./data-model.md) | Detailed data model specifications |
-| [api-spec.md](./api-spec.md) | Complete API specification |
-| [error-handling.md](./error-handling.md) | Error handling strategy |
-| [logging.md](./logging.md) | Logging implementation plan |
-| [testing.md](./testing.md) | Testing strategy and test cases |
-| [swagger.md](./swagger.md) | Swagger/OpenAPI setup guide |
+| Document                                 | Purpose                                    |
+| ---------------------------------------- | ------------------------------------------ |
+| [requirements.md](./requirements.md)     | Basic project requirements                 |
+| [architecture.md](./architecture.md)     | System architecture and data flow diagrams |
+| [data-model.md](./data-model.md)         | Detailed data model specifications         |
+| [api-spec.md](./api-spec.md)             | Complete API specification                 |
+| [error-handling.md](./error-handling.md) | Error handling strategy                    |
+| [logging.md](./logging.md)               | Logging implementation plan                |
+| [testing.md](./testing.md)               | Testing strategy and test cases            |
+| [swagger.md](./swagger.md)               | Swagger/OpenAPI setup guide                |
 
 ---
 
 ## 15. Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0.0 | Nov 2024 | - | Initial version |
+| Version | Date     | Author | Changes         |
+| ------- | -------- | ------ | --------------- |
+| 1.0.0   | Nov 2024 | -      | Initial version |
